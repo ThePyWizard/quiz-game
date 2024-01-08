@@ -11,13 +11,12 @@ const QuizSetup = ({ startQuiz }) => {
 
   return (
     <div>
-      <h2 className='font-custom text-2xl flex justify-center mt-8'>Welcome to the Quiz!</h2>
       <form onSubmit={handleStartQuiz}>
         <label className='text-2xl font-custom flex justify-center mt-8'>
           Enter your name:
           <input
             type="text" 
-            className='border-2 border-black rounded-xl ml-4'
+            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-4'
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
@@ -25,7 +24,7 @@ const QuizSetup = ({ startQuiz }) => {
         <br />
         <label className='font-custom text-2xl flex justify-center mt-8'>
           Choose a theme:
-          <select className='ml-2 rounded-xl border border-black' value={selectedTheme} onChange={(e) => setSelectedTheme(e.target.value)}>
+          <select className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-4' value={selectedTheme} onChange={(e) => setSelectedTheme(e.target.value)}>
             <option value="any">Any Theme</option>
             <option value="science">Science</option>
             <option value="history">History</option>
