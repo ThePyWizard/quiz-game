@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Koho';
+    src: url('../fonts/KoHo/KoHo-Regular.ttf') format('truetype'),
+    url('../fonts/KoHo/KoHo-Bold.ttf') format('truetype'),
+    url('../fonts/KoHo/KoHo-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
