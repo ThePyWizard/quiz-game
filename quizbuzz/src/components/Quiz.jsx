@@ -152,7 +152,7 @@ const Quiz = () => {
               {questions[currentQuestion]?.incorrect_answers.map((answer, index) => (
                 <li
                   className={`font-custom text-2xl mt-8 flex justify-center ${
-                    selectedAnswer === answer ? 'bg-blue-200' : ''
+                    selectedAnswer === answer ? 'bg-green-300' : ''
                   }`}
                   key={index}
                   onClick={() => handleAnswerClick(answer)}
@@ -162,7 +162,7 @@ const Quiz = () => {
               ))}
               <li
                 className={`font-custom text-2xl mt-8 flex justify-center ${
-                  selectedAnswer === questions[currentQuestion]?.correct_answer ? 'bg-blue-200' : ''
+                  selectedAnswer === questions[currentQuestion]?.correct_answer ? 'bg-green-300' : ''
                 }`}
                 onClick={() => handleAnswerClick(questions[currentQuestion]?.correct_answer)}
               >
@@ -171,7 +171,7 @@ const Quiz = () => {
             </ul>
             <div className='flex justify-center'>
             <button
-              className='font-custom bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8'
+              className='font-custom bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-8'
               onClick={handleContinueClick}
             >
               Continue
