@@ -33,10 +33,14 @@ const QuizSetup = ({ startQuiz }) => {
 
   const handleStartQuiz = (e) => {
     e.preventDefault();
-    console.log(userName, selectedTheme);
-    startQuiz(userName, selectedTheme); // Pass the parsed theme ID
+    if (selectedTheme === 'any') {
+      const randomIndex = Math.floor(Math.random() * categories.length);
+      const randomTheme = categories[randomIndex].id;
+      startQuiz(userName, randomTheme);
+    } else {
+      startQuiz(userName, selectedTheme);
+    };
   };
-
   return (
     <div>
       <form onSubmit={handleStartQuiz}>
