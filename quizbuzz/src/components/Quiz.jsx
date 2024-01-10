@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import QuizSetup from './Quizsetup';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-
+import he from 'he';
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -146,7 +146,7 @@ const Quiz = () => {
               Question {currentQuestion + 1}/{questions.length}
             </h2>
             <h2 className='font-custom text-2xl mt-8 flex justify-center'>
-              {questions[currentQuestion]?.question}
+              {he.decode(questions[currentQuestion]?.question)}
             </h2>
             <ul>
               {questions[currentQuestion]?.incorrect_answers.map((answer, index) => (
@@ -157,7 +157,7 @@ const Quiz = () => {
                   key={index}
                   onClick={() => handleAnswerClick(answer)}
                 >
-                  {answer}
+                  {he.decode(answer)}
                 </li>
               ))}
               <li
@@ -166,7 +166,7 @@ const Quiz = () => {
                 }`}
                 onClick={() => handleAnswerClick(questions[currentQuestion]?.correct_answer)}
               >
-                {questions[currentQuestion]?.correct_answer}
+                {he.decode(questions[currentQuestion]?.correct_answer)}
               </li>
             </ul>
             <div className='flex justify-center'>
