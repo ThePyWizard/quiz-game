@@ -14,7 +14,8 @@ const Leaderboard = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log(data);
+        data.sort((a, b) => b.Score - a.Score);
+        //console.log(data);
         setLeaderboardData(data);
       } catch (error) {
         console.error("Error fetching leaderboard data: ", error);
@@ -26,13 +27,14 @@ const Leaderboard = () => {
 
   return (
     <div>
-      <h2 className='font-custom flex justify-center mt-6 text-2xl'>Leaderboard</h2>
+      <h2 className='font-custom flex justify-center mt-6 text-2xl mb-8'>Leaderboard</h2>
       <div className='flex justify-center'>
         <table className='border-collapse border border-gray-500'>
           <thead>
             <tr>
               <th className='text-2xl font-custom border border-gray-500 p-2'>Name</th>
               <th className='text-2xl font-custom border border-gray-500 p-2'>Score</th>
+              <th className='text-2xl font-custom border border-gray-500 p-2'>Theme</th>
             </tr>
           </thead>
           <tbody>
@@ -40,6 +42,7 @@ const Leaderboard = () => {
               <tr key={item.id}>
                 <td className='border border-gray-500 p-2'>{item.Name}</td>
                 <td className='border border-gray-500 p-2'>{item.Score}</td>
+                <td className='border border-gray-500 p-2'>{item.Theme}</td>
               </tr>
             ))}
           </tbody>

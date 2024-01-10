@@ -9,15 +9,40 @@ const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [userName, setUserName] = useState('');
-  const [selectedTheme, setSelectedTheme] = useState('');
+  const [selectedTheme, setSelectedTheme] = useState('any');
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [timer, setTimer] = useState(0); // Changed initial timer value to 0
   const [quizEnded, setQuizEnded] = useState(false); // Added state for quiz ended
-
+  const categories = [
+    { id: 9, name: 'General Knowledge' },
+    { id: 10, name: 'Entertainment: Books' },
+    { id: 11, name: 'Entertainment: Film' },
+    { id: 12, name: 'Entertainment: Music' },
+    { id: 13, name: 'Entertainment: Musicals & Theatres' },
+    { id: 14, name: 'Entertainment: Television' },
+    { id: 15, name: 'Entertainment: Video Games' },
+    { id: 16, name: 'Entertainment: Board Games' },
+    { id: 17, name: 'Science & Nature' },
+    { id: 18, name: 'Science: Computers' },
+    { id: 19, name: 'Science: Mathematics' },
+    { id: 20, name: 'Mythology' },
+    { id: 21, name: 'Sports' },
+    { id: 22, name: 'Geography' },
+    { id: 23, name: 'History' },
+    { id: 24, name: 'Politics' },
+    { id: 25, name: 'Art' },
+    { id: 26, name: 'Celebrities' },
+    { id: 27, name: 'Animals' },
+    { id: 28, name: 'Vehicles' },
+    { id: 29, name: 'Entertainment: Comics' },
+    { id: 30, name: 'Science: Gadgets' },
+    { id: 31, name: 'Entertainment: Japanese Anime & Manga' },
+    { id: 32, name: 'Entertainment: Cartoon & Animations' },
+  ];
   const startQuiz = (name, theme) => {
     setUserName(name || 'Unknown'); // Set name to 'unknown' if not entered
     setSelectedTheme(theme);
-    fetchQuestions();
+    fetchQuestions(theme);
     setQuizEnded(false); // Reset quiz ended state
     setTimer(60); // Start the timer
   };
@@ -30,12 +55,15 @@ const Quiz = () => {
       const addScoreToLeaderboard = async () => {
         try {
           // Get a reference to the 'leaderboard-stats' collection
+          const selectedThemename = categories.find((category) => category.id === parseInt(selectedTheme, 10));
+          console.log("Selected Theme Name:", selectedThemename.name); // Access the 'name' property
           const leaderboardRef = collection(db, 'leaderboard-stats');
 
           // Add a new document with user's name and score
           await addDoc(leaderboardRef, {
             Name: userName,
             Score: score,
+            Theme: selectedThemename.name,
             //timestamp: new Date() // Optionally, add a timestamp for when the score was added
           });
 
@@ -67,10 +95,10 @@ const Quiz = () => {
   }, [timer, currentQuestion, questions.length]);
   
 
-  const fetchQuestions = async () => {
+  const fetchQuestions = async (theme) => {
     try {
       const response = await fetch(
-        `https://opentdb.com/api.php?amount=10&type=multiple&category=${selectedTheme}`
+        `https://opentdb.com/api.php?amount=10&category=${theme}&type=multiple`  //https://opentdb.com/api.php?amount=10&category=21&difficulty=hard&type=multiple
       );
       const data = await response.json();
       if (data.results && data.results.length > 0) {
@@ -141,27 +169,38 @@ const Quiz = () => {
                 {questions[currentQuestion]?.correct_answer}
               </li>
             </ul>
+            <div className='flex justify-center'>
             <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8'
+              className='font-custom bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8'
               onClick={handleContinueClick}
             >
               Continue
             </button>
-            <p>Time remaining: {timer} seconds</p>
+            </div>
+            
+            <p className='font-custom flex justify-center mt-8'>Time remaining: {timer} seconds</p>
           </div>
         ) : (
           quizEnded ? (
-            <div>
-              <p>Quiz ended! Your score is: {score}/{questions.length}</p>
+            <div className='font-custom'>
+              <p className='flex justify-center mt-8'>Quiz ended! Your score is: {score}/{questions.length}</p>
+              <div className='flex justify-center'>
               <button
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8'
                 onClick={handleRestartClick}
               >
                 Restart Quiz
               </button>
+              <button
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8 ml-4'
+                onClick={() => window.location.href = './leaderboard'}
+              >
+                Go to Leaderboard
+              </button>
+              </div>
             </div>
           ) : (
-            <p>Loading questions...</p>
+            <p className='font-custom flex justify-center mt-8 text-xl'>Loading questions...</p>
           )
         )
       )}

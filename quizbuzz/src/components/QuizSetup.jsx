@@ -30,12 +30,11 @@ const QuizSetup = ({ startQuiz }) => {
     { id: 31, name: 'Entertainment: Japanese Anime & Manga' },
     { id: 32, name: 'Entertainment: Cartoon & Animations' },
   ];
-  
 
   const handleStartQuiz = (e) => {
     e.preventDefault();
     console.log(userName, selectedTheme);
-    startQuiz(userName, selectedTheme);
+    startQuiz(userName, selectedTheme); // Pass the parsed theme ID
   };
 
   return (
@@ -61,7 +60,7 @@ const QuizSetup = ({ startQuiz }) => {
             <option value="any">Any Theme</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
-                {category.name}
+                {category.id} - {category.name}
               </option>
             ))}
           </select>
