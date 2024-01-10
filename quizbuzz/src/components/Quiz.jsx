@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import QuizSetup from './Quizsetup';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -8,37 +11,61 @@ const Quiz = () => {
   const [userName, setUserName] = useState('');
   const [selectedTheme, setSelectedTheme] = useState('');
   const [selectedAnswer, setSelectedAnswer] = useState('');
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(0); // Changed initial timer value to 0
   const [quizEnded, setQuizEnded] = useState(false); // Added state for quiz ended
 
   const startQuiz = (name, theme) => {
-    setUserName(name);
+    setUserName(name || 'Unknown'); // Set name to 'unknown' if not entered
     setSelectedTheme(theme);
     fetchQuestions();
     setQuizEnded(false); // Reset quiz ended state
+    setTimer(60); // Start the timer
   };
 
   useEffect(() => {
     if (questions.length > 0 && currentQuestion >= questions.length) {
       // Quiz ends, do something (e.g., display final score)
       alert(`Quiz ended! Your score is: ${score}/${questions.length}`);
+      // Quiz ends, add score to leaderboard
+      const addScoreToLeaderboard = async () => {
+        try {
+          // Get a reference to the 'leaderboard-stats' collection
+          const leaderboardRef = collection(db, 'leaderboard-stats');
+
+          // Add a new document with user's name and score
+          await addDoc(leaderboardRef, {
+            Name: userName,
+            Score: score,
+            //timestamp: new Date() // Optionally, add a timestamp for when the score was added
+          });
+
+          console.log('Score added to leaderboard!');
+        } catch (error) {
+          console.error('Error adding score to leaderboard: ', error);
+        }
+      };
+
+      addScoreToLeaderboard();
       setQuizEnded(true); // Set quiz ended state to true
     }
-  }, [currentQuestion, questions, score]);
+  }, [currentQuestion, questions, score, userName]);
 
   useEffect(() => {
-    const countdown = setInterval(() => {
-      setTimer((prevTimer) => prevTimer - 1);
-    }, 1000);
-
-    if (timer === 0) {
+    let countdown;
+    if (timer > 0 && currentQuestion < questions.length) {
+      countdown = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else if (timer === 0 && currentQuestion < questions.length) {
       clearInterval(countdown);
       alert('Time is up!');
       setCurrentQuestion(currentQuestion + 1);
+      setTimer(60);
     }
-
+  
     return () => clearInterval(countdown);
-  }, [timer, currentQuestion]);
+  }, [timer, currentQuestion, questions.length]);
+  
 
   const fetchQuestions = async () => {
     try {
@@ -76,7 +103,7 @@ const Quiz = () => {
     setCurrentQuestion(0);
     setScore(0);
     setSelectedAnswer('');
-    setTimer(60);
+    setTimer(0); // Reset timer to 0
     setQuizEnded(false);
   };
 

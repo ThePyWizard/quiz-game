@@ -11,6 +11,7 @@ const firebaseConfig = {
   measurementId: "G-5H147JE0WE"
 };
 
-// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app); // Use getFirestore function to get the Firestore instance
+const db = getFirestore(app);
+
+export { db };

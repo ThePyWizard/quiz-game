@@ -1,21 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore'; // Add this import
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBOhYYKHwwJZbQyYrG1g4ttRvGFwtQaitY",
-  authDomain: "quizbuzz-thepywizard.firebaseapp.com",
-  projectId: "quizbuzz-thepywizard",
-  storageBucket: "quizbuzz-thepywizard.appspot.com",
-  messagingSenderId: "852936180798",
-  appId: "1:852936180798:web:0d31af825ad23f39cdfd6f",
-  measurementId: "G-5H147JE0WE"
-};
-
-// Initialize Firebase app
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app); // Use getFirestore function to get the Firestore instance
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Leaderboard = () => {
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -29,7 +14,7 @@ const Leaderboard = () => {
           id: doc.id,
           ...doc.data(),
         }));
-
+        console.log(data);
         setLeaderboardData(data);
       } catch (error) {
         console.error("Error fetching leaderboard data: ", error);
