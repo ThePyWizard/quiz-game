@@ -1,6 +1,5 @@
 
-![Header Image](https://github.com/ThePyWizard/quiz-game/assets/91713896/4b87e25f-3dc1-4b3e-99ca-a8ef95272916)
-
+![Header Image](https://github.com/ThePyWizard/quiz-game/assets/91713896/f0b819ee-f7b6-4cff-b892-7644caad1d1c)
 
 # Quiz Buzz
 
