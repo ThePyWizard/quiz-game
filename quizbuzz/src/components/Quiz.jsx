@@ -151,7 +151,7 @@ const Quiz = () => {
             <ul>
               {questions[currentQuestion]?.incorrect_answers.map((answer, index) => (
                 <li
-                  className={`font-custom text-2xl mt-8 flex justify-center ${
+                  className={`font-custom text-2xl mt-8 flex justify-center hover:cursor-pointer ${
                     selectedAnswer === answer ? 'bg-green-300' : ''
                   }`}
                   key={index}
@@ -161,7 +161,7 @@ const Quiz = () => {
                 </li>
               ))}
               <li
-                className={`font-custom text-2xl mt-8 flex justify-center ${
+                className={`font-custom text-2xl mt-8 flex justify-center hover:cursor-pointer ${
                   selectedAnswer === questions[currentQuestion]?.correct_answer ? 'bg-green-300' : ''
                 }`}
                 onClick={() => handleAnswerClick(questions[currentQuestion]?.correct_answer)}
