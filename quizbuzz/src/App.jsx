@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <div onClick={() => window.location.href = './'}>
-      <h1 className='text-6xl flex justify-center font-custom font-bold mt-20'>QUIZ <span className="text-white bg-green-500 ml-1"> BUZZ</span></h1>
+      <h1 className='text-6xl flex justify-center font-custom font-bold mt-20 hover:cursor-pointer'>QUIZ <span className="text-white bg-green-500 ml-1 hover:cursor-pointer"> BUZZ</span></h1>
       </div>
       <Router>
         <Routes>
