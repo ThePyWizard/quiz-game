@@ -4,6 +4,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import he from 'he';
 
+
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
