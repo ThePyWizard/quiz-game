@@ -143,7 +143,7 @@ const Quiz = () => {
       ) : (
         questions.length > 0 && currentQuestion < questions.length ? (
           <div>
-            <h2 className='font-custom text-2xl mt-8 flex justify-center'>
+            <h2 className='font-custom text-2xl mt-8 flex justify-center sm: ml-3'>
               Question {currentQuestion + 1}/{questions.length}
             </h2>
             <h2 className='font-custom text-2xl mt-8 flex justify-center'>
@@ -162,7 +162,7 @@ const Quiz = () => {
                 </li>
               ))}
               <li
-                className={`font-custom text-2xl mt-8 flex justify-center hover:cursor-pointer ${
+                className={`font-custom text-2xl mt-8 flex justify-center rounded hover:cursor-pointer ${
                   selectedAnswer === questions[currentQuestion]?.correct_answer ? 'bg-green-300' : ''
                 }`}
                 onClick={() => handleAnswerClick(questions[currentQuestion]?.correct_answer)}

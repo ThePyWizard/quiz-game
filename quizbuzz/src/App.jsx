@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      <div className='flex justify-center mt-8' onClick={() => window.location.href = './'}>
+      <div className='flex justify-center mt-8 hover:cursor-pointer' onClick={() => window.location.href = './'}>
       <img src={Logo} alt="Logo" />
       </div>
       <Router>
