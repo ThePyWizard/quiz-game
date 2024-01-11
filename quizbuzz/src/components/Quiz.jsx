@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import QuizSetup from './Quizsetup';
+import Quizsetup from './Quizsetup';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import he from 'he';
@@ -139,7 +139,7 @@ const Quiz = () => {
   return (
     <div>
       {userName === '' ? (
-        <QuizSetup startQuiz={startQuiz} />
+        <Quizsetup startQuiz={startQuiz} />
       ) : (
         questions.length > 0 && currentQuestion < questions.length ? (
           <div>
