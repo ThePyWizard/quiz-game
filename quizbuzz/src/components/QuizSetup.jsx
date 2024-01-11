@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const QuizSetup = ({ startQuiz }) => {
+const Quizsetup = ({ startQuiz }) => {
   const [userName, setUserName] = useState('');
   const [selectedTheme, setSelectedTheme] = useState('any'); // Default theme
 
@@ -83,4 +83,4 @@ const QuizSetup = ({ startQuiz }) => {
   );
 };
 
-export default QuizSetup;
+export default Quizsetup;
