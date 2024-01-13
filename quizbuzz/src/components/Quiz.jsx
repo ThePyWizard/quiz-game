@@ -99,11 +99,18 @@ const Quiz = () => {
   const fetchQuestions = async (theme) => {
     try {
       const response = await fetch(
-        `https://opentdb.com/api.php?amount=10&category=${theme}&type=multiple`  //https://opentdb.com/api.php?amount=10&category=21&difficulty=hard&type=multiple
+        `https://opentdb.com/api.php?amount=10&category=${theme}&type=multiple`
       );
       const data = await response.json();
       if (data.results && data.results.length > 0) {
-        setQuestions(data.results);
+        // Shuffle options for each question
+        const shuffledQuestions = data.results.map((question) => {
+          return {
+            ...question,
+            incorrect_answers: shuffleArray([...question.incorrect_answers, question.correct_answer]),
+          };
+        });
+        setQuestions(shuffledQuestions);
       } else {
         console.error('No questions fetched');
       }
@@ -136,6 +143,15 @@ const Quiz = () => {
     setQuizEnded(false);
   };
 
+  const shuffleArray = (array) => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  };
+
   return (
     <div>
       {userName === '' ? (
@@ -150,25 +166,18 @@ const Quiz = () => {
               {he.decode(questions[currentQuestion]?.question)}
             </h2>
             <ul>
-              {questions[currentQuestion]?.incorrect_answers.map((answer, index) => (
-                <li
-                  className={`font-custom text-2xl mt-8 flex justify-center hover:cursor-pointer ${
-                    selectedAnswer === answer ? 'bg-green-300' : ''
-                  }`}
-                  key={index}
-                  onClick={() => handleAnswerClick(answer)}
-                >
-                  {he.decode(answer)}
-                </li>
-              ))}
+            {questions[currentQuestion]?.incorrect_answers.map((answer, index) => (
               <li
-                className={`font-custom text-2xl mt-8 flex justify-center rounded hover:cursor-pointer ${
-                  selectedAnswer === questions[currentQuestion]?.correct_answer ? 'bg-green-300' : ''
+                className={`font-custom text-2xl mt-8 flex justify-center hover:cursor-pointer ${
+                  selectedAnswer === answer ? 'bg-green-300' : ''
                 }`}
-                onClick={() => handleAnswerClick(questions[currentQuestion]?.correct_answer)}
+                key={index}
+                onClick={() => handleAnswerClick(answer)}
               >
-                {he.decode(questions[currentQuestion]?.correct_answer)}
+                {he.decode(answer)}
               </li>
+            ))}
+
             </ul>
             <div className='flex justify-center'>
             <button
