@@ -3,7 +3,7 @@
 
 # Quiz Buzz
 
-The Quiz App is a web-based application developed in React that allows users to participate in quizzes based on selected themes/categories. It fetches questions from an external API and tracks the user's score and time taken to answer each question.
+The QuizBuzz is a web-based application developed in React that allows users to participate in quizzes based on selected themes/categories. It fetches questions from an external API and tracks the user's score and time taken to answer each question.
 
 ## Features
 
